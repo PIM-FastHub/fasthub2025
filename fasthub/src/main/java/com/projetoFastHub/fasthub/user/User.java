@@ -1,5 +1,7 @@
 package com.projetoFastHub.fasthub.user;
 
+import com.projetoFastHub.fasthub.Endereco.Endereco;
+import com.projetoFastHub.fasthub.servico.ServicoModel;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +20,20 @@ public class User implements UserDetails {
     private String login;
 
     private String senha;
+
+    private String email;
+
+    private String telefone;
+
+    private String documento;
+
+    private Boolean isPrestador;
+
+    @ManyToOne
+    private ServicoModel servico;
+
+    @Embedded
+    private Endereco endereco;
 
     public Long getId() {
         return id;

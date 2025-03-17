@@ -18,7 +18,7 @@ public class ServicoRestController {
     private ServicoDAO servicoDAO;
 
     @PostMapping("insere")
-    public String insere(Model model, ServicoModel servico) {
+    public ResponseEntity<ServicoModel> insere (Model model, ServicoModel servico) {
         ServicoModel servicoNovo = ServicoModel.builder()
                 .nome(servico.getNome())
                 .descricao(servico.getDescricao())
@@ -26,7 +26,7 @@ public class ServicoRestController {
                 .build();
 
         servicoDAO.insereServico(servicoNovo);
-        return "redirect:/administracao/servico/lista";
+        return ResponseEntity.ok(servicoNovo);
     }
 
     @PostMapping("altera")
@@ -42,10 +42,10 @@ public class ServicoRestController {
     }
 
     @GetMapping("lista")
-    public String lista(Model model) {
+    public ResponseEntity<List<ServicoModel>> lista(Model model) {
         List<ServicoModel> listaServico = servicoDAO.listaTodosServicos();
-        model.addAttribute("listaServico", listaServico);
-        return "administracao/servico/lista";
+
+        return ResponseEntity.ok(listaServico);
     }
 
     @GetMapping("/administracao/servico/exclui/{id}")

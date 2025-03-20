@@ -26,21 +26,21 @@ public class SolicitacaoServicoDAO {
 
 
     @Transactional
-    public void insereItem(SolicitacaoServicoModel item) {
+    public void insereSolicitacaoServico(SolicitacaoServicoModel item) {
         this.manager.persist(item);
         this.manager.flush();
         this.manager.detach(item);
     }
 
     @Transactional
-    public void alteraItem(SolicitacaoServicoModel item) {
+    public void alteraSolicitacaoServico(SolicitacaoServicoModel item) {
         this.manager.merge(item);
         this.manager.flush();
         this.manager.detach(item);
     }
 
     @Transactional
-    public void excluirItem(SolicitacaoServicoModel item) {
+    public void excluirSolicitacaoServico(SolicitacaoServicoModel item) {
         this.manager.remove(this.manager.find(SolicitacaoServicoModel.class, item.getId()));
     }
 
@@ -64,7 +64,7 @@ public class SolicitacaoServicoDAO {
         return null;
     }
 
-    public SolicitacaoServicoModel buscaItemPorId(Long id) {
+    public SolicitacaoServicoModel buscaSolicitacaoServicoPorId(Long id) {
         return (SolicitacaoServicoModel)this.manager.find(SolicitacaoServicoModel.class, id);
     }
 

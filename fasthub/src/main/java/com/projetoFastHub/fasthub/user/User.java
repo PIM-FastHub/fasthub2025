@@ -115,4 +115,52 @@ public class User implements UserDetails {
         this.senha = senha;
         this.role = role;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public Boolean getPrestador() {
+        return isPrestador;
+    }
+
+    public void setPrestador(Boolean prestador) {
+        isPrestador = prestador;
+    }
+
+    public ServicoModel getServico() {
+        return servico;
+    }
+
+    public void setServico(ServicoModel servico) {
+        this.servico = servico;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 }

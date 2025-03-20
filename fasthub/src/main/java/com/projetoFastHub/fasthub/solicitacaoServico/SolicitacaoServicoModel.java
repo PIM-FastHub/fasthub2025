@@ -20,10 +20,10 @@ public class SolicitacaoServicoModel {
     private ServicoModel servicoId;
 
     @ManyToOne
-    private UserDTO clienteId;
+    private User clienteId;
 
     @ManyToOne
-    private UserDTO prestadorId;
+    private User prestadorId;
 
     private String prazo;
     private String descricaoDoProblema;
@@ -56,19 +56,19 @@ public class SolicitacaoServicoModel {
         this.servicoId = servicoId;
     }
 
-    public UserDTO getClienteId() {
+    public User getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(UserDTO clienteId) {
+    public void setClienteId(User clienteId) {
         this.clienteId = clienteId;
     }
 
-    public UserDTO getPrestadorId() {
+    public User getPrestadorId() {
         return prestadorId;
     }
 
-    public void setPrestadorId(UserDTO prestadorId) {
+    public void setPrestadorId(User prestadorId) {
         this.prestadorId = prestadorId;
     }
 

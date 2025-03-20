@@ -1,5 +1,6 @@
 package com.projetoFastHub.fasthub.servico;
 
+import com.projetoFastHub.fasthub.categoria.CategoriaModel;
 import jakarta.persistence.*;
 import java.util.Calendar;
 
@@ -15,13 +16,22 @@ public class ServicoModel {
     private Calendar dataInclusao;
     private Calendar dataAlteracao;
 
-    // Construtor privado para evitar instanciação direta
-    ServicoModel(ServicoBuilder builder) {
-        this.nome = builder.getNome();
-        this.descricao = builder.getDescricao();
-        this.dataInclusao = builder.getDataInclusao();
-        this.dataAlteracao = builder.getDataAlteracao();
+    @ManyToOne
+    private CategoriaModel categoria;
+
+    public CategoriaModel getCategoria() {
+        return categoria;
     }
+
+    public void setCategoria(CategoriaModel categoria) {
+        this.categoria = categoria;
+    }
+
+    // Construtor privado para evitar instanciação direta
+
+
+    public ServicoModel(){}
+
 
     public Long getId() {
         return id;
@@ -43,9 +53,24 @@ public class ServicoModel {
         return dataAlteracao;
     }
 
-    // Método para acessar o Builder
-    public static ServicoBuilder builder() {
-        return new ServicoBuilder();
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setDataInclusao(Calendar dataInclusao) {
+        this.dataInclusao = dataInclusao;
+    }
+
+    public void setDataAlteracao(Calendar dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 
     @Override
@@ -54,8 +79,10 @@ public class ServicoModel {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descricao='" + descricao + '\'' +
-                ", dataInclusao=" + dataInclusao.getTime() +
-                ", dataAlteracao=" + dataAlteracao.getTime() +
+                ", dataInclusao=" + (dataInclusao != null ? dataInclusao.getTime() : "null") +
+                ", dataAlteracao=" + (dataAlteracao != null ? dataAlteracao.getTime() : "null") +
+                ", categoria=" + (categoria != null ? categoria.getDescricao() : "null") +
                 '}';
     }
+
 }

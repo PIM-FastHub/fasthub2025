@@ -1,5 +1,7 @@
 package com.projetoFastHub.fasthub.servico;
 
+import com.projetoFastHub.fasthub.categoria.CategoriaDAO;
+import com.projetoFastHub.fasthub.categoria.CategoriaModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,13 +19,23 @@ public class ServicoRestController {
     @Autowired
     private ServicoDAO servicoDAO;
 
+    @Autowired
+    private CategoriaDAO categoriaDAO;
+
     @PostMapping("insere")
-    public ResponseEntity<ServicoModel> insere (Model model, ServicoModel servico) {
-        ServicoModel servicoNovo = ServicoModel.builder()
-                .nome(servico.getNome())
-                .descricao(servico.getDescricao())
-                .dataInclusao(Calendar.getInstance())
-                .build();
+    public ResponseEntity<ServicoModel> insere (@RequestBody ServicoResponseDTO servico) {
+        System.out.println(servico.categoriaId());
+        System.out.println(servico.descricao());
+        System.out.println(servico.nome());
+
+        CategoriaModel categoriaModel = categoriaDAO.buscaCategoriaPorId(servico.categoriaId());
+        System.out.println(categoriaModel.getId() + " "+ categoriaModel.getDescricao()+ " "+ categoriaModel.getDataInclusao());
+
+        ServicoModel servicoNovo = new ServicoModel();
+        servicoNovo.setCategoria(categoriaModel);
+        servicoNovo.setNome(servico.nome());
+        servicoNovo.setDescricao(servico.descricao());
+        servicoNovo.setDataInclusao(Calendar.getInstance());
 
         servicoDAO.insereServico(servicoNovo);
         return ResponseEntity.ok(servicoNovo);
@@ -31,13 +43,13 @@ public class ServicoRestController {
 
     @PostMapping("altera")
     public String altera(Model model, ServicoModel servico) {
-        ServicoModel servicoNovo = ServicoModel.builder()
-                .nome(servico.getNome())
-                .descricao(servico.getDescricao())
-                .dataInclusao(servico.getDataInclusao())
-                .dataAlteracao(Calendar.getInstance())
-                .build();
-        servicoDAO.alteraServico(servicoNovo);
+//        ServicoModel servicoNovo = ServicoModel.builder()
+//                .nome(servico.getNome())
+//                .descricao(servico.getDescricao())
+//                .dataInclusao(servico.getDataInclusao())
+//                .dataAlteracao(Calendar.getInstance())
+//                .build();
+        //servicoDAO.alteraServico(null);
         return "redirect:/administracao/servico/lista";
     }
 

@@ -46,6 +46,7 @@ public class ConfiguracaoSeguranca {
 
 
                             .requestMatchers(HttpMethod.GET, "/administracao/**").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/administracao/**").permitAll()
                             .anyRequest().authenticated()
                     )
                     .addFilterBefore(filtroDeSeguranca, UsernamePasswordAuthenticationFilter.class)

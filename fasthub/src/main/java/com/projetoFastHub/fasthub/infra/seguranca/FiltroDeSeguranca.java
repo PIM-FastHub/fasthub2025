@@ -1,13 +1,12 @@
 package com.projetoFastHub.fasthub.infra.seguranca;
 
-import com.projetoFastHub.fasthub.user.UserRepository;
+import com.projetoFastHub.fasthub.aplicacao.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -25,6 +24,19 @@ public class FiltroDeSeguranca extends OncePerRequestFilter {
     UserRepository userRepository;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+       String path = request.getRequestURI();
+        if (
+                path.startsWith("/swagger-ui") ||
+                        path.startsWith("/v3/api-docs") ||
+                        path.equals("/swagger-ui.html") ||
+                        path.startsWith("/webjars/")
+        ) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
         var token = this.recuperarToken(request);
 
         if(token != null){
@@ -42,7 +54,8 @@ public class FiltroDeSeguranca extends OncePerRequestFilter {
     private String recuperarToken(HttpServletRequest request){
         var autenticacao = request.getHeader("Authorization");
         if(autenticacao == null)return null;
-        return autenticacao.replace("Barear ", "");
+        return autenticacao.replace("Bearer ", "");
+
 
 
     }

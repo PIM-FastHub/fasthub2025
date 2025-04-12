@@ -43,9 +43,15 @@ public class ConfiguracaoSeguranca {
                             .requestMatchers(HttpMethod.POST, "/h2-console/**").permitAll()
                             .requestMatchers(HttpMethod.POST,"/autenticacao/**").permitAll()
                             .requestMatchers(HttpMethod.GET,"/autenticacao/**").permitAll()
+                            .requestMatchers(
+                                    "/swagger-ui.html",
+                                    "/swagger-ui/**",
+                                    "/v3/api-docs/**",
+                                    "/v3/api-docs.yaml",
+                                    "/webjars/**"
+                            ).permitAll()
 
-
-                            .requestMatchers(HttpMethod.GET, "/administracao/**").permitAll()
+                            .requestMatchers("/administracao/**").permitAll()
                             .requestMatchers(HttpMethod.POST, "/administracao/**").permitAll()
                             .anyRequest().authenticated()
                     )

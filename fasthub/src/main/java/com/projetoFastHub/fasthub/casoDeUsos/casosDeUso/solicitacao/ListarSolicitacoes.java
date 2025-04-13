@@ -1,4 +1,4 @@
-package com.projetoFastHub.fasthub.casoDeUsos.casosDeUso;
+package com.projetoFastHub.fasthub.casoDeUsos.casosDeUso.solicitacao;
 
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoModel;
 

@@ -51,6 +51,7 @@ public class FiltroDeSeguranca extends OncePerRequestFilter {
     }
 
 
+
     private String recuperarToken(HttpServletRequest request){
         var autenticacao = request.getHeader("Authorization");
         if(autenticacao == null)return null;

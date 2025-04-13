@@ -5,18 +5,23 @@ import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
 import com.projetoFastHub.fasthub.aplicacao.user.User;
 import com.projetoFastHub.fasthub.aplicacao.user.UserRepository;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoDAO;
-import com.projetoFastHub.fasthub.aplicacao.servico.ServicoModel;
-import com.projetoFastHub.fasthub.casoDeUsos.implementacao.CriarSolicitacao;
-import com.projetoFastHub.fasthub.casoDeUsos.implementacao.ListarTodasSolicitacoes;
+import com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao.CriarSolicitacao;
+import com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao.EditarSolicitacao;
+import com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao.ExcluirSolicitacao;
+import com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao.ListarTodasSolicitacoes;
+import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
 import java.util.List;
 
 @RestController
 public class SolicitacaoRestController {
+
+    @Autowired
+    EditarSolicitacao editarSolicitacao;
 
     @Autowired
     ListarTodasSolicitacoes listarTodasSolicitacoes;
@@ -33,6 +38,9 @@ public class SolicitacaoRestController {
 
     @Autowired
     private CriarSolicitacao criarSolicitacao;
+
+    @Autowired
+    private ExcluirSolicitacao excluirSolicitacao;
 
     @Autowired
     private SolicitacaoFactory factory;
@@ -52,7 +60,7 @@ public class SolicitacaoRestController {
     }
 
 
-    @GetMapping("/prestador/solicitacao/lista/{idUsuario}")
+    @GetMapping({"/prestador/solicitacao/lista/{idUsuario}","/administracao/solicitacao/lista/{idUsuario}"})
     public ResponseEntity<List<SolicitacaoModel>> listaSolicitacaoPorServico(@PathVariable Long idUsuario) {
 
         User usuario = userRepository.findById(idUsuario)
@@ -64,6 +72,23 @@ public class SolicitacaoRestController {
     }
 
 
+    @GetMapping({"/cliente/solicitacao/excluir/{idSolicitacao}", "/administracao/solicitacao/excluir/{idSolicitacao}"})
+    public ResponseEntity<String> deletarSolicitacao(@PathVariable Long idSolicitacao){
+       String respostaMetodoExclusao = excluirSolicitacao.excluirSolicitacao(idSolicitacao);
+       return ResponseEntity.ok(respostaMetodoExclusao);
+    }
+
+
+
+
+    @PostMapping({"/cliente/solicitacao/editar/{idSolicitacao}", "/administracao/solicitacao/editar/{idSolicitacao}"})
+    public ResponseEntity<String> editarSolicitacao(@PathVariable Long idSolicitacao, @RequestBody @Valid SolicitacaoResponseDTO novosDados){
+
+        String respostaMetodoEditar = editarSolicitacao.editarSolicitacao(idSolicitacao, novosDados);
+        return ResponseEntity.ok(respostaMetodoEditar);
+    }
+
+
 
     @PostMapping("/cliente/solicitacao/criar")
         public ResponseEntity<String> clienteCriaSolicitacao(@RequestBody SolicitacaoResponseDTO data){
@@ -71,7 +96,7 @@ public class SolicitacaoRestController {
         SolicitacaoModel solicitacao = factory.deDTO_Para_Model(retornoDTO);
         solicitacaoDAO.insere(solicitacao);
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok("Criado");
     }
 
 

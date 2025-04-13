@@ -2,6 +2,7 @@ package com.projetoFastHub.fasthub.aplicacao.user;
 
 import com.projetoFastHub.fasthub.aplicacao.Endereco.Endereco;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaModel;
+import com.projetoFastHub.fasthub.aplicacao.moedaSistema.MoedaSistema;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,6 +35,11 @@ public class User implements UserDetails {
 
     @Embedded
     private Endereco endereco;
+
+    @Embedded
+    private MoedaSistema moedaSistema;
+
+
 
 
     public Long getId() {
@@ -165,5 +171,17 @@ public class User implements UserDetails {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public CategoriaModel getCategoriaModel() {
+        return categoriaModel;
+    }
+
+    public MoedaSistema getMoedaSistema() {
+        return moedaSistema;
+    }
+
+    public void setMoedaSistema(MoedaSistema moedaSistema) {
+        this.moedaSistema = moedaSistema;
     }
 }

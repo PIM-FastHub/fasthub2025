@@ -1,8 +1,8 @@
-package com.projetoFastHub.fasthub.casoDeUsos.implementacao;
+package com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao;
 
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoDAO;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoModel;
-import com.projetoFastHub.fasthub.casoDeUsos.casosDeUso.ListarSolicitacoes;
+import com.projetoFastHub.fasthub.casoDeUsos.casosDeUso.solicitacao.ListarSolicitacoes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

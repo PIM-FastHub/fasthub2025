@@ -1,15 +1,13 @@
-package com.projetoFastHub.fasthub.casoDeUsos.implementacao;
+package com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao;
 
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoDAO;
-import com.projetoFastHub.fasthub.aplicacao.servico.ServicoModel;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoDTO;
-import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoModel;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoResponseDTO;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.StatusEnum;
 import com.projetoFastHub.fasthub.aplicacao.user.User;
 import com.projetoFastHub.fasthub.aplicacao.user.UserRepository;
-import com.projetoFastHub.fasthub.casoDeUsos.casosDeUso.CriarSolicitacaoCase;
+import com.projetoFastHub.fasthub.casoDeUsos.casosDeUso.solicitacao.CriarSolicitacaoCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

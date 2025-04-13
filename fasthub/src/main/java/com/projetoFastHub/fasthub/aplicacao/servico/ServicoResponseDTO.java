@@ -1,4 +1,6 @@
 package com.projetoFastHub.fasthub.aplicacao.servico;
 
-public record ServicoResponseDTO(String nome, String descricao, Long categoriaId)  {
+import jakarta.validation.constraints.NotNull;
+
+public record ServicoResponseDTO(@NotNull String nome, @NotNull String descricao, @NotNull Long categoriaId)  {
 }

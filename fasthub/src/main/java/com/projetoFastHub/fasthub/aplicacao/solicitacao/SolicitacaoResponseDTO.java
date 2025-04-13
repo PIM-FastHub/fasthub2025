@@ -1,4 +1,6 @@
 package com.projetoFastHub.fasthub.aplicacao.solicitacao;
 
-public record SolicitacaoResponseDTO(Long idCliente, Long idServico, Long idCategoria, String prazo) {
+import jakarta.validation.constraints.NotNull;
+
+public record SolicitacaoResponseDTO(@NotNull  Long idCliente, @NotNull  Long idServico, @NotNull Long idCategoria,@NotNull String prazo) {
 }

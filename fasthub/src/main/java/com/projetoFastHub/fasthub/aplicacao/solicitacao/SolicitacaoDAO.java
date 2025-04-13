@@ -1,5 +1,6 @@
 package com.projetoFastHub.fasthub.aplicacao.solicitacao;
 
+import com.projetoFastHub.fasthub.adapters.solicitacao.SolicitacaoRepository;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class SolicitacaoDAO {
+public class SolicitacaoDAO implements SolicitacaoRepository {
 
     private static final String TABELA = SolicitacaoModel.class.getSimpleName();
 
@@ -22,6 +23,7 @@ public class SolicitacaoDAO {
     }
 
 
+    @Override
     @Transactional
     public void insere(SolicitacaoModel item) {
         this.manager.persist(item);
@@ -29,6 +31,7 @@ public class SolicitacaoDAO {
         this.manager.detach(item);
     }
 
+    @Override
     @Transactional
     public void altera(SolicitacaoModel item) {
         this.manager.merge(item);
@@ -36,18 +39,20 @@ public class SolicitacaoDAO {
         this.manager.detach(item);
     }
 
+    @Override
     @Transactional
     public void excluir(SolicitacaoModel item) {
         this.manager.remove(this.manager.find(SolicitacaoModel.class, item.getId()));
     }
 
-
+    @Override
     public List<SolicitacaoModel> listaTodasSolicitacoes() {
         String jpql = "SELECT i FROM " + TABELA+ " i";
         TypedQuery<SolicitacaoModel> query = this.manager.createQuery(jpql, SolicitacaoModel.class);
         return query.getResultList();
     }
 
+    @Override
     public SolicitacaoModel buscaPorID(Long id) {
         String jpql = "SELECT c FROM " + TABELA + " c WHERE c.id =:id ";
         TypedQuery<SolicitacaoModel> query = this.manager.createQuery(jpql, SolicitacaoModel.class);
@@ -59,6 +64,7 @@ public class SolicitacaoDAO {
         return null;
     }
 
+    @Override
     public List<SolicitacaoModel> listaSolicitacaoPorCategoria(CategoriaModel categoriaModel){
         String jpql ="SELECT s FROM "+TABELA+" s WHERE s.categoria=:categoria";
         TypedQuery<SolicitacaoModel> query = this.manager.createQuery(jpql, SolicitacaoModel.class);

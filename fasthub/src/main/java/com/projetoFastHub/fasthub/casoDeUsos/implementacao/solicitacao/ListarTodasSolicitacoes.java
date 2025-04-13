@@ -1,5 +1,6 @@
 package com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao;
 
+import com.projetoFastHub.fasthub.adapters.solicitacao.SolicitacaoRepository;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoDAO;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoModel;
 import com.projetoFastHub.fasthub.casoDeUsos.casosDeUso.solicitacao.ListarSolicitacoes;
@@ -12,9 +13,9 @@ import java.util.List;
 public class ListarTodasSolicitacoes implements ListarSolicitacoes {
 
     @Autowired
-    private SolicitacaoDAO dao;
+    private SolicitacaoRepository solicitacaoRepository;
     @Override
     public List<SolicitacaoModel> listaTodasSolicitacoes() {
-        return dao.listaTodasSolicitacoes();
+        return solicitacaoRepository.listaTodasSolicitacoes();
     }
 }

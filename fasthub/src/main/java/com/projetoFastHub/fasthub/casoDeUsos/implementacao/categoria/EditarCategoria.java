@@ -23,7 +23,7 @@ public class EditarCategoria implements EditarCategoriaCase {
             categoria.setDataAlteracao(Calendar.getInstance());
             categoria.setDescricao(data.descricao());
             categoria.setDataInclusao(categoria.getDataInclusao());
-            dao.alteraCategoria(categoria);
+            dao.alterarCategoria(categoria);
             return "Editado com Sucesso";
         }catch (Exception e){
             return "Erro ao Editar";

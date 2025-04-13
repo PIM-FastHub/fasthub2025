@@ -1,5 +1,8 @@
 package com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao;
 
+import com.projetoFastHub.fasthub.adapters.categoria.CategoriaRepository;
+import com.projetoFastHub.fasthub.adapters.servico.ServicoRepository;
+import com.projetoFastHub.fasthub.adapters.solicitacao.SolicitacaoRepository;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoDAO;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoDAO;
@@ -15,10 +18,10 @@ import org.springframework.stereotype.Component;
 public class EditarSolicitacao implements EditarSolicitacaoCase {
 
     @Autowired
-    SolicitacaoDAO dao;
+    SolicitacaoRepository solicitacaoRepository;
 
     @Autowired
-    CategoriaDAO categoriaDAO;
+    CategoriaRepository categoriaRepository;
 
     @Autowired
     SolicitacaoFactory factory;
@@ -27,17 +30,17 @@ public class EditarSolicitacao implements EditarSolicitacaoCase {
     UserRepository repository;
 
     @Autowired
-    ServicoDAO servicoDAO;
+    ServicoRepository servicoRepository;
     @Override
     public String editarSolicitacao(Long id, SolicitacaoResponseDTO data) {
         try {
-            SolicitacaoModel solicitacaoModel = dao.buscaPorID(id);
-            solicitacaoModel.setCategoria(categoriaDAO.buscaCategoriaPorId(data.idCategoria()));
+            SolicitacaoModel solicitacaoModel = solicitacaoRepository.buscaPorID(id);
+            solicitacaoModel.setCategoria(categoriaRepository.buscaCategoriaPorId(data.idCategoria()));
             solicitacaoModel.setPrazo(data.prazo());
             solicitacaoModel.setCliente(repository.getReferenceById(data.idCliente()));
-            solicitacaoModel.setServico(servicoDAO.buscaServicoPorId(data.idServico()));
+            solicitacaoModel.setServico(servicoRepository.buscaServicoPorId(data.idServico()));
 
-            dao.altera(solicitacaoModel);
+            solicitacaoRepository.altera(solicitacaoModel);
             return "Alterou Com Sucesso";
         }catch (Exception e){
             return "erro "+ e.getMessage();

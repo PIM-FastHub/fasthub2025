@@ -1,5 +1,7 @@
 package com.projetoFastHub.fasthub.casoDeUsos.implementacao.solicitacao;
 
+import com.projetoFastHub.fasthub.adapters.categoria.CategoriaRepository;
+import com.projetoFastHub.fasthub.adapters.servico.ServicoRepository;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoDAO;
 import com.projetoFastHub.fasthub.aplicacao.solicitacao.SolicitacaoDTO;
@@ -19,10 +21,10 @@ import java.util.Calendar;
 @Component
 public class CriarSolicitacao implements CriarSolicitacaoCase {
     @Autowired
-    ServicoDAO servicoDAO;
+    ServicoRepository servicoRepository;
 
     @Autowired
-    CategoriaDAO categoriaDAO;
+    CategoriaRepository categoriaRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -33,8 +35,8 @@ public class CriarSolicitacao implements CriarSolicitacaoCase {
         User usuario = userRepository.findById(data.idCliente())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-        SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO(servicoDAO.buscaServicoPorId(data.idServico()),
-                categoriaDAO.buscaCategoriaPorId(data.idCategoria()),usuario, data.prazo(), StatusEnum.SEM_ATENDIMENTO, Calendar.getInstance() );
+        SolicitacaoDTO solicitacaoDTO = new SolicitacaoDTO(servicoRepository.buscaServicoPorId(data.idServico()),
+                categoriaRepository.buscaCategoriaPorId(data.idCategoria()),usuario, data.prazo(), StatusEnum.SEM_ATENDIMENTO, Calendar.getInstance() );
 
         return solicitacaoDTO;
     }

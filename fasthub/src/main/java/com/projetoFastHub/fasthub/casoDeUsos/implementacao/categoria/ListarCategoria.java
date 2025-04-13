@@ -15,7 +15,7 @@ public class ListarCategoria implements ListaCategoriaCase {
     CategoriaDAO dao;
     @Override
     public List<CategoriaModel> listaTodasCategorias() {
-            List<CategoriaModel> lista = dao.listaTodasCategorias();
+            List<CategoriaModel> lista = dao.listarTodasCategorias();
             return lista;
 
     }

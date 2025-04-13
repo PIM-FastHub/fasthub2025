@@ -1,7 +1,11 @@
 package com.projetoFastHub.fasthub.aplicacao.solicitacao;
 
 
+import com.projetoFastHub.fasthub.adapters.categoria.CategoriaRepository;
+import com.projetoFastHub.fasthub.adapters.servico.ServicoRepository;
+import com.projetoFastHub.fasthub.adapters.solicitacao.SolicitacaoRepository;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
+import com.projetoFastHub.fasthub.aplicacao.servico.ServicoResponseDTO;
 import com.projetoFastHub.fasthub.aplicacao.user.User;
 import com.projetoFastHub.fasthub.aplicacao.user.UserRepository;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoDAO;
@@ -27,14 +31,10 @@ public class SolicitacaoRestController {
     ListarTodasSolicitacoes listarTodasSolicitacoes;
 
     @Autowired
-    private CategoriaDAO categoriaDAO;
-    @Autowired
-    private ServicoDAO servicoDAO;
-    @Autowired
-    private UserRepository userRepository;
+    SolicitacaoRepository solicitacaoRepository;
 
     @Autowired
-    private SolicitacaoDAO solicitacaoDAO;
+    UserRepository userRepository;
 
     @Autowired
     private CriarSolicitacao criarSolicitacao;
@@ -48,7 +48,7 @@ public class SolicitacaoRestController {
     public ResponseEntity<SolicitacaoModel> insere(@RequestBody SolicitacaoResponseDTO data){
         SolicitacaoDTO retornoDTO = criarSolicitacao.criarSolicitacao(data);
         SolicitacaoModel solicitacao = factory.deDTO_Para_Model(retornoDTO);
-        solicitacaoDAO.insere(solicitacao);
+        solicitacaoRepository.insere(solicitacao);
         return ResponseEntity.ok(solicitacao);
     }
 
@@ -66,7 +66,7 @@ public class SolicitacaoRestController {
         User usuario = userRepository.findById(idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-       List<SolicitacaoModel> solicitacoes = solicitacaoDAO.listaSolicitacaoPorCategoria(usuario.getCategoria());
+       List<SolicitacaoModel> solicitacoes = solicitacaoRepository.listaSolicitacaoPorCategoria(usuario.getCategoria());
 
         return ResponseEntity.ok(solicitacoes);
     }
@@ -94,7 +94,7 @@ public class SolicitacaoRestController {
         public ResponseEntity<String> clienteCriaSolicitacao(@RequestBody SolicitacaoResponseDTO data){
         SolicitacaoDTO retornoDTO = criarSolicitacao.criarSolicitacao(data);
         SolicitacaoModel solicitacao = factory.deDTO_Para_Model(retornoDTO);
-        solicitacaoDAO.insere(solicitacao);
+        solicitacaoRepository.insere(solicitacao);
 
         return ResponseEntity.ok("Criado");
     }

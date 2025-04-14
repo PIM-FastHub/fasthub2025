@@ -58,4 +58,12 @@ public class SolicitacaoDAO {
         }
         return null;
     }
+
+    public List<SolicitacaoModel> buscaPorServico(ServicoModel servico) {
+        String jpql = "SELECT s FROM " + TABELA + " s WHERE s.servico = :servico";
+        TypedQuery<SolicitacaoModel> query = this.manager.createQuery(jpql, SolicitacaoModel.class);
+        query.setParameter("servico", servico);
+
+        return query.getResultList();
+    }
 }

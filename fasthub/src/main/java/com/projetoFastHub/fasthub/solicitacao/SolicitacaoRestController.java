@@ -8,12 +8,10 @@ import com.projetoFastHub.fasthub.user.User;
 import com.projetoFastHub.fasthub.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +24,6 @@ public class SolicitacaoRestController {
     private ServicoDAO servicoDAO;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private SolicitacaoDAO solicitacaoDAO;
 
@@ -63,5 +60,23 @@ public class SolicitacaoRestController {
 
 
         return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/administracao/solicitacao/porServico/{id}")
+    public ResponseEntity<List<SolicitacaoModel>> listaPorServico(@PathVariable Long id) {
+
+        ServicoModel servico = servicoDAO.buscaServicoPorId(id);
+
+        if (servico == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<SolicitacaoModel> solicitacoes = solicitacaoDAO.buscaPorServico(servico);
+
+        if (solicitacoes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+
+        }
+        return ResponseEntity.ok(solicitacoes);
     }
 }

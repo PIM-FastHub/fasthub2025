@@ -1,5 +1,7 @@
 package com.projetoFastHub.fasthub.casoDeUsos.implementacao.servico;
 
+import com.projetoFastHub.fasthub.adapters.categoria.CategoriaRepository;
+import com.projetoFastHub.fasthub.adapters.servico.ServicoRepository;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaModel;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoDAO;
@@ -15,21 +17,24 @@ import java.util.Calendar;
 public class CriarServico implements IncluirServicoCase {
 
     @Autowired
-    CategoriaDAO categoriaDAO;
+    CategoriaRepository categoriaRepository;
 
     @Autowired
-    ServicoDAO servicoDAO;
+    ServicoRepository servicoRepository;
+
+
+
     @Override
     public String criarServico(ServicoResponseDTO servico) {
         try{
-        CategoriaModel categoriaModel = categoriaDAO.buscaCategoriaPorId(servico.categoriaId());
+        CategoriaModel categoriaModel = categoriaRepository.buscaCategoriaPorId(servico.categoriaId());
 
         ServicoModel servicoNovo = new ServicoModel();
         servicoNovo.setCategoria(categoriaModel);
         servicoNovo.setNome(servico.nome());
         servicoNovo.setDescricao(servico.descricao());
         servicoNovo.setDataInclusao(Calendar.getInstance());
-        servicoDAO.insereServico(servicoNovo);
+        servicoRepository.inserirServico(servicoNovo);
         return "Serviço criado com sucesso";
     }catch (Exception e){
             return "Erro ao Incluir "+ e.getMessage();

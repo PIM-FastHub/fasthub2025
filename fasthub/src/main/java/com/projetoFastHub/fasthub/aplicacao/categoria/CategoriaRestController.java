@@ -36,6 +36,7 @@ public class CategoriaRestController {
     @GetMapping("api/categoria/listar")
     public ResponseEntity<List<CategoriaModel>> listaTodosApi(){
         List<CategoriaModel> listaCategoria = listarCategoria.listaTodasCategorias();
+        //teste Commit
         return ResponseEntity.ok(listaCategoria);
     }
 

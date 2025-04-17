@@ -50,6 +50,8 @@ public class ConfiguracaoSeguranca {
                                     "/v3/api-docs.yaml",
                                     "/webjars/**"
                             ).permitAll()
+                            .requestMatchers("/reset-password").permitAll()
+                            .requestMatchers("/reset-password/**").permitAll()
 
                             .requestMatchers("/administracao/**").permitAll()
                             .requestMatchers(HttpMethod.POST, "/administracao/**").permitAll()

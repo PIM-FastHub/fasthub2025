@@ -1,5 +1,7 @@
 package com.projetoFastHub.fasthub.aplicacao.solicitacao;
 
+import com.projetoFastHub.fasthub.aplicacao.Endereco.Endereco;
+import com.projetoFastHub.fasthub.aplicacao.avaliacao.AvaliacaoModel;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaModel;
 import com.projetoFastHub.fasthub.aplicacao.user.User;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoModel;
@@ -17,6 +19,17 @@ public class SolicitacaoModel {
     private ServicoModel servico;
     @ManyToOne
     private CategoriaModel categoria;
+
+    private String titulo;
+
+    private String descricao;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "avaliacao_id")
+    private AvaliacaoModel avaliacao;
+
+    @Embedded
+    private Endereco endereco;
     @ManyToOne
     private User cliente;
     @ManyToOne
@@ -102,5 +115,37 @@ public class SolicitacaoModel {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public AvaliacaoModel getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(AvaliacaoModel avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }

@@ -36,7 +36,7 @@ public class ServicoRestController {
 
     @PutMapping("editar/{id}")
     public ResponseEntity<String> altera(@PathVariable Long id, @RequestBody ServicoResponseDTO servico) {
-        String retornoMetodoEditar = editarServico.editarServico(id, servico);
+        String retornoMetodoEditar = editarServico.editarServico( id,servico);
         return ResponseEntity.ok(retornoMetodoEditar);
     }
 

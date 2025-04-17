@@ -3,6 +3,7 @@ package com.projetoFastHub.fasthub.aplicacao.user;
 import com.projetoFastHub.fasthub.aplicacao.Endereco.Endereco;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaModel;
 import com.projetoFastHub.fasthub.aplicacao.moedaSistema.MoedaSistema;
+import com.projetoFastHub.fasthub.aplicacao.solicitacao.StatusEnum;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -39,9 +40,11 @@ public class User implements UserDetails {
     @Embedded
     private MoedaSistema moedaSistema;
 
+    private String nome;
+    private String sobrenome;
 
-
-
+    @Enumerated(EnumType.STRING)
+    private StatusUsuario statusEnum;
     public Long getId() {
         return id;
     }
@@ -181,7 +184,32 @@ public class User implements UserDetails {
         return moedaSistema;
     }
 
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
     public void setMoedaSistema(MoedaSistema moedaSistema) {
         this.moedaSistema = moedaSistema;
+    }
+
+    public StatusUsuario getStatusEnum() {
+        return statusEnum;
+    }
+
+    public void setStatusEnum(StatusUsuario statusEnum) {
+        this.statusEnum = statusEnum;
     }
 }

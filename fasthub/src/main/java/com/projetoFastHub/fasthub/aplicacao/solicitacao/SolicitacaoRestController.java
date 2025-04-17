@@ -3,6 +3,7 @@ package com.projetoFastHub.fasthub.aplicacao.solicitacao;
 
 import com.projetoFastHub.fasthub.adapters.categoria.CategoriaRepository;
 import com.projetoFastHub.fasthub.adapters.servico.ServicoRepository;
+import com.projetoFastHub.fasthub.adapters.solicitacao.SolicitacaoHistoricoService;
 import com.projetoFastHub.fasthub.adapters.solicitacao.SolicitacaoRepository;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
 import com.projetoFastHub.fasthub.aplicacao.servico.ServicoResponseDTO;
@@ -35,6 +36,9 @@ public class SolicitacaoRestController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    SolicitacaoHistoricoService solicitacaoHistoricoService;
 
     @Autowired
     private CriarSolicitacao criarSolicitacao;
@@ -97,6 +101,13 @@ public class SolicitacaoRestController {
         solicitacaoRepository.insere(solicitacao);
 
         return ResponseEntity.ok("Criado");
+    }
+
+    @GetMapping("/administracao/solicitacao/historico")
+    public ResponseEntity<List<SolicitacaoDTOHistorico>> historico() {
+        List<SolicitacaoModel> lista = listarTodasSolicitacoes.listaTodasSolicitacoes();
+        List<SolicitacaoDTOHistorico> historico = solicitacaoHistoricoService.listaHistorico(lista);
+        return ResponseEntity.ok(historico);
     }
 
 

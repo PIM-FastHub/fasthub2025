@@ -26,16 +26,6 @@ public class ConfiguracaoSeguranca {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
             return http
-
-                    .cors(cors -> cors.configurationSource(request -> {
-                        CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(List.of("http://127.0.0.1:5500")); // Defina a origem correta
-                        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                        config.setAllowedHeaders(List.of("*"));
-                        config.setAllowCredentials(true);
-                        return config;
-                    }))
-
                     .csrf(csrf -> csrf.disable())
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authorizeHttpRequests(auth -> auth

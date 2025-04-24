@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Controller
+@RestController
 @RequestMapping("autenticacao")
 public class AutenticacaoController {
 
@@ -63,7 +63,7 @@ public class AutenticacaoController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register (@RequestBody RegisterDTO registerDTO){
+    public ResponseEntity<?> register (@RequestBody RegisterDTO registerDTO){
         if(this.userRepository.findByLogin(registerDTO.login()) != null) return ResponseEntity.badRequest().build();
 
         String senhaEncriptografada = new BCryptPasswordEncoder().encode(registerDTO.password());
@@ -84,7 +84,7 @@ public class AutenticacaoController {
        novoUsuario.setStatusEnum(StatusUsuario.ATIVO);
 
         this.userRepository.save(novoUsuario);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("CRIADO");
     }
 
     @GetMapping("/api/listaUsuario")

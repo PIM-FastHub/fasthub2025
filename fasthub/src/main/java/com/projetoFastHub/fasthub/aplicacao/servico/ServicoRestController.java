@@ -1,5 +1,7 @@
 package com.projetoFastHub.fasthub.aplicacao.servico;
 
+import com.projetoFastHub.fasthub.adapters.categoria.CategoriaRepository;
+import com.projetoFastHub.fasthub.adapters.servico.ServicoRepository;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaDAO;
 import com.projetoFastHub.fasthub.aplicacao.categoria.CategoriaModel;
 import com.projetoFastHub.fasthub.casoDeUsos.implementacao.servico.*;
@@ -28,6 +30,14 @@ public class ServicoRestController {
 
     @Autowired
     ListarServico listarServico;
+
+
+    @Autowired
+    ServicoRepository servicoRepository;
+
+
+    @Autowired
+    CategoriaRepository categoriaRepository;
     @PostMapping("insere")
     public ResponseEntity<String> insere (@RequestBody ServicoResponseDTO servico) {
         String retornoMetodoRetorno = criarServico.criarServico(servico);
@@ -51,6 +61,15 @@ public class ServicoRestController {
     public ResponseEntity<String> exclui(Model model, @PathVariable(value = "id") Long id) {
       String retornoMetodoExclusao = excluirServico.excluirServico(id);
         return ResponseEntity.ok(retornoMetodoExclusao);
+    }
+
+
+
+    @GetMapping("/buscarServicoPorCategoria/{id}")
+    public ResponseEntity<List<ServicoModel>> buscaporCategoria(@PathVariable Long id){
+        CategoriaModel categoriaModel =categoriaRepository.buscaCategoriaPorId(id);
+        List<ServicoModel>lista = servicoRepository.buscaServicoPorCategoria(categoriaModel);
+        return ResponseEntity.ok(lista);
     }
 
 }

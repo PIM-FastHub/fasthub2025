@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/administracao/servico/")
+@CrossOrigin(origins = "*")
 public class ServicoRestController {
 
 

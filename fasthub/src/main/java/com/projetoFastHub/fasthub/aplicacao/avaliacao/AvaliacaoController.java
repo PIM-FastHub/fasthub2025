@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/avaliacao/")
+@CrossOrigin(origins = "*")
 public class AvaliacaoController {
     @Autowired
     AvaliacaoCriarCase avaliacaoCriarCase;

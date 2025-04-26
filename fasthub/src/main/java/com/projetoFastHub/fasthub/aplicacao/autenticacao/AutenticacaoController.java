@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("autenticacao")
 public class AutenticacaoController {
@@ -50,6 +50,7 @@ public class AutenticacaoController {
     @Autowired
     UserDAO dao;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AutenticacaoDTO autenticacaoDTO){
         var usernamePassword = new UsernamePasswordAuthenticationToken
@@ -62,6 +63,7 @@ public class AutenticacaoController {
         return ResponseEntity.ok(new LoginResponseDTO(token, usuario.getAuthorities()));
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/register")
     public ResponseEntity<?> register (@RequestBody RegisterDTO registerDTO){
         if(this.userRepository.findByLogin(registerDTO.login()) != null) return ResponseEntity.badRequest().build();
@@ -94,6 +96,7 @@ public class AutenticacaoController {
     }
 
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPasswordRequest(@RequestParam String email) {
         User user = dao.findByEmail(email);
@@ -129,6 +132,7 @@ public class AutenticacaoController {
 
 
     // Endpoint para realizar o reset de senha
+    @CrossOrigin(origins = "*")
     @PostMapping("/reset-password/confirm")
     public ResponseEntity<String> confirmResetPassword(@RequestParam String token, @RequestParam String novaSenha) {
         ResetToken resetSenhaToken = resetSenhaTokenRepository.findByToken(token);

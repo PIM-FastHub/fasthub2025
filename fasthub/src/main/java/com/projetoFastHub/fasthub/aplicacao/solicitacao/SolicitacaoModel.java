@@ -39,7 +39,7 @@ public class SolicitacaoModel {
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
-    SolicitacaoModel() {}
+    public SolicitacaoModel() {}
 
     public Long getId() {
         return id;

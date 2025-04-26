@@ -23,34 +23,34 @@ public class ConfiguracaoSeguranca {
 
     @Autowired
     FiltroDeSeguranca filtroDeSeguranca;
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
-            return http
-                    .csrf(csrf -> csrf.disable())
-                    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .authorizeHttpRequests(auth -> auth
-                            .requestMatchers(HttpMethod.GET, "/h2-console/**").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/h2-console/**").permitAll()
-                            .requestMatchers(HttpMethod.POST,"/autenticacao/**").permitAll()
-                            .requestMatchers(HttpMethod.GET,"/autenticacao/**").permitAll()
-                            .requestMatchers(
-                                    "/swagger-ui.html",
-                                    "/swagger-ui/**",
-                                    "/v3/api-docs/**",
-                                    "/v3/api-docs.yaml",
-                                    "/webjars/**"
-                            ).permitAll()
-                            .requestMatchers("/reset-password").permitAll()
-                            .requestMatchers("/reset-password/**").permitAll()
-
-                            .requestMatchers("/administracao/**").permitAll()
-                            .requestMatchers(HttpMethod.POST, "/administracao/**").permitAll()
-                            .anyRequest().authenticated()
-                    )
-                    .addFilterBefore(filtroDeSeguranca, UsernamePasswordAuthenticationFilter.class)
-                    .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/h2-console/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/autenticacao/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/autenticacao/**").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers("/reset-password").permitAll()
+                        .requestMatchers("/reset-password/**").permitAll()
+                        .requestMatchers("/administracao/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/administracao/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())) // Adicionar CORS padrão
+                .addFilterBefore(filtroDeSeguranca, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -58,7 +58,7 @@ public class ConfiguracaoSeguranca {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
